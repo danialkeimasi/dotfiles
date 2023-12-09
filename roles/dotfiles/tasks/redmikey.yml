@@ -1,0 +1,13 @@
+- name: install redmikey systemd service
+  become: yes
+  ansible.builtin.template:
+    src: redmikey.service
+    dest: /etc/systemd/system/redmikey.service
+
+- name: enable and start redmikey service
+  become: yes
+  ansible.builtin.systemd:
+    name: redmikey.service
+    enabled: yes
+    state: started
+    daemon_reload: yes

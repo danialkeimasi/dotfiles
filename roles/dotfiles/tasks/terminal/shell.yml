@@ -1,0 +1,87 @@
+- name: install zsh shell
+  become: yes
+  ansible.builtin.package:
+    name: zsh
+    state: latest
+
+- name: get zsh binary path
+  ansible.builtin.shell: which zsh
+  changed_when: false
+  register: which_zsh
+
+- name: set zsh as default shell
+  become: yes
+  ansible.builtin.user:
+    name: "{{ lookup('env', 'USER') }}"
+    shell: "{{ which_zsh.stdout }}"
+
+- name: install curl
+  become: yes
+  ansible.builtin.package:
+    name: curl
+    state: present
+
+- name: install oh-my-zsh if not present
+  ansible.builtin.shell:
+    cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+    creates: "~/.oh-my-zsh"
+
+- name: install zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+- name: install powerlevel10k
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+    depth: 1
+
+- name: install zsh-autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+- name: install zsh_welcome
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/zsh_welcome.sh"
+    dest: ~/.zsh_welcome
+    state: link
+
+- name: link files
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/{{ item }}"
+    dest: ~/.{{ item }}
+    state: link
+  with_items:
+    - zshrc
+    - zprofile
+
+- name: install lsd
+  become: yes
+  ansible.builtin.package:
+    name: lsd
+    state: latest
+
+- name: create lsd config directory
+  ansible.builtin.file:
+    dest: ~/.config/lsd
+    state: directory
+
+- name: configure lsd
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/lsd_config.yml"
+    dest: ~/.config/lsd/config.yaml
+    state: link
+
+- name: install bat
+  become: yes
+  ansible.builtin.package:
+    name: bat
+    state: latest
+
+- name: install atuin
+  become: yes
+  ansible.builtin.package:
+    name: atuin
+    state: latest

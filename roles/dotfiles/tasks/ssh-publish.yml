@@ -1,0 +1,20 @@
+- name: install autossh
+  become: yes
+  ansible.builtin.package:
+    name:
+      - autossh
+    state: latest
+
+- name: install ssh-publish systemd service
+  become: yes
+  ansible.builtin.template:
+    src: ssh-publish.service
+    dest: /etc/systemd/system/ssh-publish.service
+
+- name: enable and start ssh-publish service
+  become: yes
+  ansible.builtin.systemd:
+    name: ssh-publish.service
+    enabled: yes
+    state: started
+    daemon_reload: yes

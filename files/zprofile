@@ -1,0 +1,44 @@
+# ------------------------
+# path
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+# export PATH=":$PATH"
+
+# ------------------------
+# aliases and functions
+alias ls='lsd'
+alias l='lsd'
+alias vim='nvim'
+
+alias myip="curl ifconfig.io/country_code"
+
+# ------------------------
+# quera related stuff
+export QUERA_ROOT="$HOME/Repositories/quera/quera"
+fpath+="$QUERA_ROOT/.quera/completion"
+autoload -Uz compinit && compinit
+
+q() {
+    if [[ "$PWD" == "$QUERA_ROOT" ]]; then
+        ./q $@
+    else
+        cd $QUERA_ROOT
+    fi
+}
+alias qf="cd $QUERA_ROOT/front/next"
+alias qfn="cd $QUERA_ROOT/front/navbar"
+alias qr="cd $QUERA_ROOT/react"
+
+# ------------------------
+# pyenv
+if [ -d "$HOME/.pyenv" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+
+    if [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
+        export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+        eval "$(pyenv virtualenv-init -)"
+    fi
+fi

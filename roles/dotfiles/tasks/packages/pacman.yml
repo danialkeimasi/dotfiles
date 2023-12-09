@@ -1,0 +1,64 @@
+- name: install misc packages
+  become: yes
+  community.general.pacman:
+    update_cache: yes
+    name:
+      - neofetch
+      - git
+      - lazygit
+      - man-db
+      - neovim
+      - tmux
+      - htop
+      - iotop
+      - powertop
+      - tree
+      - unzip
+      - lnav
+      - wget
+      - curl
+      - nodejs
+      - npm
+      - docker
+      - docker-compose
+      - dbeaver
+      - qbittorrent
+      - libreoffice
+      - gnome-browser-connector
+      - telegram-desktop
+      - bitwarden
+      - rsync
+    state: latest
+
+# https://github.com/AppImage/AppImageKit/wiki/FUSE
+- name: install fuse2 (AppImage dependency)
+  become: yes
+  ansible.builtin.package:
+    name: fuse2
+    state: latest
+
+- name: install desktop apps from pacman
+  become: yes
+  ansible.builtin.package:
+    name:
+      # - gimp
+      # - inkscape
+      # - vlc # vlc from flatpak has some problems
+      - firefox
+      - uget
+    state: latest
+
+- name: configure pacman
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop: "{{ pacman_config }}"
+
+- name: install packages for usb debugging with andorid
+  become: yes
+  ansible.builtin.package:
+    name:
+      - android-tools
+    state: latest

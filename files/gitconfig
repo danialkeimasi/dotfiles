@@ -1,0 +1,15 @@
+[include]
+	path = ./.gitconfig-user
+[push]
+    autoSetupRemote = true
+[pull]
+    rebase = true
+[rebase]
+    autoStash = true
+    stat = true
+[merge]
+    ff = false
+[core]
+    editor = nvim
+[init]
+    defaultBranch = main

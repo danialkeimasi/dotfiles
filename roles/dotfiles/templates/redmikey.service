@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Map redmikey to f12
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/setkeycodes 72 88
+
+[Install]
+WantedBy=multi-user.target

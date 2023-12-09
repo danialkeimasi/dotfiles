@@ -1,0 +1,17 @@
+- name: install flatpak
+  become: yes
+  ansible.builtin.package:
+    name: flatpak
+    state: latest
+
+- name: install flatpak apps
+  community.general.flatpak:
+    name:
+      - com.mattermost.Desktop  # Open Source Communication Platform
+      - com.mattjakeman.ExtensionManager  # Browse, install, and manage GNOME Shell Extensions
+      - de.haeckerfelix.Shortwave  # Online radio
+      - org.gtk.Gtk3theme.adw-gtk3 # Adwaita team for gtk3 apps
+      - org.gtk.Gtk3theme.adw-gtk3-dark # Adwaita dark team for gtk3 apps
+      - org.kde.okular # KDE pdf editor
+      - org.gustavoperedo.FontDownloader # Font browser and downloader
+    state: present

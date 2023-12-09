@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Publish SSH Server to server with public ip address
+After=network.target
+
+[Service]
+User=danial
+Environment=AUTOSSH_GATETIME=0
+Environment=AUTOSSH_POLL=30
+ExecStart=/usr/bin/autossh -M 0 -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -N -T -R 127.0.0.1:{{ lookup('env', 'SSH_PUBLISH_PORT') }}:127.0.0.1:{{ lookup('env', 'SSH_HOST_PORT') }} {{ lookup('env', 'SSH_PUBLISH_PORTAL') }}
+
+[Install]
+WantedBy=default.target

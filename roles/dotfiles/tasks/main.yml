@@ -1,0 +1,49 @@
+- name: set timezone
+  become: yes
+  community.general.timezone:
+    name: "{{ lookup('env', 'MY_TIMEZONE') }}"
+  tags: [timezone]
+
+- import_tasks: packages/main.yml
+  tags: [packages]
+
+- import_tasks: fonts.yml
+  tags: [fonts]
+
+- import_tasks: gnome.yml
+  tags: [gnome]
+
+- import_tasks: terminal/main.yml
+  tags: [terminal]
+
+- import_tasks: python.yml
+  tags: [python]
+
+- import_tasks: ssh.yml
+  tags: [ssh]
+
+- import_tasks: ssh-publish.yml
+  tags: [ssh-publish]
+  when: lookup('env', 'PUBLISH_SSH') | bool
+
+- import_tasks: electron-flags.yml
+  tags: [electron-flags]
+
+- import_tasks: git.yml
+  tags: [git]
+
+- import_tasks: bluetooth.yml
+  tags: [bluetooth]
+
+- import_tasks: celluloid.yml
+  tags: [celluloid]
+
+- import_tasks: redmikey.yml
+  tags: [redmikey]
+  when: lookup('env', 'IS_REDMI') | bool
+
+# - import_tasks: audio.yml
+#   tags: [audio]
+
+# - import_tasks: suspend.yml
+#   tags: [suspend]

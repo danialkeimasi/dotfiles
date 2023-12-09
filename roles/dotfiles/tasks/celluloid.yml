@@ -1,0 +1,17 @@
+- name: install celluloid
+  become: yes
+  ansible.builtin.package:
+    name:
+      - celluloid
+    state: latest
+
+- name: create celluloid config directory
+  ansible.builtin.file:
+    path: ~/.config/celluloid
+    state: directory
+
+- name: link celluloid mpv.conf
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/mpv.conf"
+    dest: ~/.config/celluloid/mpv.conf
+    state: link

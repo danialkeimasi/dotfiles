@@ -1,0 +1,67 @@
+- name: install font packages
+  become: yes
+  community.general.pacman:
+    name:
+      - adobe-source-code-pro-fonts
+      - cantarell-fonts
+      - noto-fonts # provider for ttf-font (https://wiki.archlinux.org/title/Fonts#Families)
+      - ttf-cascadia-code
+      - ttf-cascadia-code-nerd
+      - ttf-cascadia-mono-nerd
+      - ttf-sourcecodepro-nerd
+    state: latest
+
+- name: install ttf-twemoji (emoji font)
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    name: ttf-twemoji
+    state: latest
+
+- name: create user fonts directory
+  ansible.builtin.file:
+    path: ~/.local/share/fonts  # ~/.fonts is deprecated
+    state: directory
+
+- name: install Vazirmatn font
+  quera.github.install_from_github:
+    repo: rastikerdar/vazirmatn
+    asset_regex: vazirmatn-.*\.zip
+    version_file: ~/.local/share/fonts/vazirmatn.version
+    move_rules:
+      - src_regex: fonts/ttf
+        dst: ~/.local/share/fonts/Vazirmatn
+
+- name: create "Vazir Code" fonts directory
+  ansible.builtin.file:
+    path: ~/.local/share/fonts/Vazir Code
+    state: directory
+
+- name: install "Vazir Code" font
+  quera.github.install_from_github:
+    repo: rastikerdar/vazir-code-font
+    asset_regex: vazir-code-font-.*\.zip
+    version_file: ~/.local/share/fonts/vazircode.version
+    move_rules:
+      - src_regex: Vazir-Code\..*
+        dst: ~/.local/share/fonts/Vazir Code
+
+- name: create fontconfig/conf.d directory
+  ansible.builtin.file:
+    path: ~/.config/fontconfig/conf.d
+    state: directory
+
+- name: install fontconfig.xml
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/fontconfig.xml"
+    dest: ~/.config/fontconfig/conf.d/00-persian.conf
+    state: link
+
+- name: run fc-cache
+  ansible.builtin.command: fc-cache
+
+- name: set gnome monospace font
+  gsettings:
+    schema: org.gnome.desktop.interface
+    key: monospace-font-name
+    value: CaskaydiaCove Nerd Font Mono

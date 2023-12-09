@@ -1,0 +1,28 @@
+- name: create electron flags for non-browser apps
+  ansible.builtin.template:
+    src: electron-flags
+    dest: ~/.config/{{ item }}
+  vars:
+    vaapi: False
+    force_dark_mode: False
+  loop:
+    - code-flags.conf
+    - electron17-flags.conf
+    - electron18-flags.conf
+    - electron19-flags.conf
+    - electron20-flags.conf
+    - electron21-flags.conf
+    - electron22-flags.conf
+    - electron23-flags.conf
+    - electron24-flags.conf
+    - electron25-flags.conf
+
+- name: create electron flags for non-browser apps
+  ansible.builtin.template:
+    src: electron-flags
+    dest: ~/.config/{{ item }}
+  vars:
+    vaapi: True
+    force_dark_mode: True
+  loop:
+    - chrome-flags.conf

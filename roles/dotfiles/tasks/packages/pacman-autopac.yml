@@ -1,0 +1,24 @@
+# autopac timer run "checkupdates -d" periodically, so updating packages becomes instant.
+
+- name: install pacman-contrib (for checkupdates script)
+  become: yes
+  community.general.pacman:
+    name: pacman-contrib
+    state: latest
+
+- name: install autopac systemd service and timer
+  become: yes
+  ansible.builtin.template:
+    src: autopac/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+  loop:
+    - autopac.service
+    - autopac.timer
+
+- name: enable and start autopac timer
+  become: yes
+  ansible.builtin.systemd:
+    name: autopac.timer
+    enabled: yes
+    state: started
+    daemon_reload: yes

@@ -1,0 +1,10 @@
+[Unit]
+Description=Download Pacman Updates Automatically
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/checkupdates -d
+ExecStart=/usr/bin/touch /var/log/autopac_done
+
+[Install]
+WantedBy=default.target

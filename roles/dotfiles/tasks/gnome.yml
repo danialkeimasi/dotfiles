@@ -1,0 +1,108 @@
+# https://wiki.archlinux.org/title/wayland#Detect_Xwayland_applications_visually
+- name: install xeyes (to detect Xwayland applications)
+  become: yes
+  ansible.builtin.package:
+    name: xorg-xeyes
+    state: latest
+
+- name: install required packages for gnome extentions
+  become: yes
+  ansible.builtin.package:
+    name:
+      - clutter-gtk
+    state: latest
+
+- name: install gnome extensions
+  ansible.builtin.command:
+    cmd: |
+      busctl --user call
+      org.gnome.Shell
+      /org/gnome/Shell
+      org.gnome.Shell.Extensions InstallRemoteExtension
+      s "{{ item }}"
+    creates: "{{ ('~/.local/share/gnome-shell/extensions' | expanduser, item) | path_join }}"
+  with_items:
+    - appindicatorsupport@rgcjonas.gmail.com # https://extensions.gnome.org/extension/615/appindicator-support/
+    - BingWallpaper@ineffable-gmail.com # https://extensions.gnome.org/extension/1262/bing-wallpaper-changer/
+    - clipboard-history@alexsaveau.dev # https://extensions.gnome.org/extension/4839/clipboard-history/
+    - ddterm@amezin.github.com # https://extensions.gnome.org/extension/3780/ddterm/
+    - gnome-ui-tune@itstime.tech # https://extensions.gnome.org/extension/4158/gnome-40-ui-improvements/
+    - gsconnect@andyholmes.github.io # https://extensions.gnome.org/extension/1319/gsconnect/
+    - rocketbar@chepkun.github.com # https://extensions.gnome.org/extension/5180/rocketbar/
+    - gtktitlebar@velitasali.github.io # https://extensions.gnome.org/extension/1732/gtk-title-bar/
+    - PersianCalendar@oxygenws.com # https://extensions.gnome.org/extension/240/persian-calendar/
+    - status-area-horizontal-spacing@mathematical.coffee.gmail.com # https://extensions.gnome.org/extension/355/status-area-horizontal-spacing/
+    - system-monitor-next@paradoxxx.zero.gmail.com # https://extensions.gnome.org/extension/3010/system-monitor-next/
+    # - executor@raujonas.github.io # https://extensions.gnome.org/extension/2932/executor/
+    # - Vitals@CoreCoding.com # https://extensions.gnome.org/extension/1460/vitals/
+    # - dash-to-panel@jderose9.github.com  # use rocketbar instead
+    # - arcmenu@arcmenu.com # https://extensions.gnome.org/extension/3628/arcmenu/
+
+- name: install adwaita-gtk3 theme
+  kewlfft.aur.aur:
+    name: adw-gtk3-git
+    state: present
+  become: yes
+  become_user: aur_builder
+  when: ansible_os_family == "Archlinux"
+
+
+- name: enable adwaita-gtk3 theme
+  gsettings:
+    schema: org.gnome.desktop.interface
+    key: gtk-theme
+    value: adw-gtk3-dark
+
+- name: install qogir icon theme
+  kewlfft.aur.aur:
+    name: qogir-icon-theme
+    state: present
+  become: yes
+  become_user: aur_builder
+  when: ansible_os_family == "Archlinux"
+
+- name: set cursor theme to "Qogir"
+  gsettings:
+    schema: org.gnome.desktop.interface
+    key: cursor-theme
+    value: Qogir-dark
+
+- name: set monospace font to "CaskaydiaCove Nerd Font Mono"
+  gsettings:
+    schema: org.gnome.desktop.interface
+    key: monospace-font-name
+    value: CaskaydiaCove Nerd Font Mono
+
+- name: some gnome settings
+  gsettings:
+    schema: "{{ item.schema }}"
+    key: "{{ item.key }}"
+    value: "{{ item.value | string }}"
+  with_items:
+    - schema: org.gnome.shell.app-switcher
+      key: current-workspace-only
+      value: "true"
+    - schema: org.gnome.desktop.peripherals.touchpad
+      key: tap-to-click
+      value: "true"
+    - schema: org.gnome.desktop.peripherals.touchpad
+      key: two-finger-scrolling-enabled
+      value: "true"
+    - schema: org.gnome.desktop.input-sources
+      key: sources
+      value: "[('xkb', 'us'), ('xkb', 'ir')]"
+    - schema: org.gnome.desktop.wm.preferences
+      key: button-layout
+      value: "appmenu:minimize,maximize,close"
+
+# https://wiki.archlinux.org/title/PipeWire#WebRTC_screen_sharing
+- name: install required packages for webrtc screen sharing
+  become: yes
+  ansible.builtin.package:
+    name:
+      - pipewire
+      - wireplumber
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gnome
+      - clutter-gtk
+    state: latest

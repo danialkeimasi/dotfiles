@@ -1,0 +1,12 @@
+- name: generate .gitconfig-user
+  ansible.builtin.template:
+    src: gitconfig-user
+    dest: ~/.gitconfig-user
+    mode: 0644
+    backup: yes
+
+- name: link .gitconfig
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/gitconfig"
+    dest: ~/.gitconfig
+    state: link

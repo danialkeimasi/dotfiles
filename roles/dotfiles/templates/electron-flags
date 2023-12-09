@@ -1,0 +1,11 @@
+{% set use_wayland = lookup('env', 'USE_WAYLAND') | bool %}
+{% if use_wayland %}
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+{% endif %}
+{% if vaapi %}
+--enable-features=VaapiVideoDecoder
+{% endif %}
+{% if force_dark_mode %}
+--force-dark-mode
+{% endif %}
