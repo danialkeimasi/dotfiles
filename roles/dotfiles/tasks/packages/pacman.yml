@@ -28,6 +28,7 @@
       - telegram-desktop
       - bitwarden
       - rsync
+      - duf
     state: latest
 
 # https://github.com/AppImage/AppImageKit/wiki/FUSE
