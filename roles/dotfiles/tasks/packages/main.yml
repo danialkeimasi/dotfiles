@@ -2,10 +2,10 @@
   tags: [packages/pacman]
 
 - import_tasks: pacman-reflector.yml
-  tags: [ packages/pacman-reflector ]
+  tags: [packages/pacman-reflector]
 
 - import_tasks: pacman-autopac.yml
-  tags: [ packages/pacman-autopac ]
+  tags: [packages/pacman-autopac]
 
 - import_tasks: aur.yml
   tags: [packages/aur]
