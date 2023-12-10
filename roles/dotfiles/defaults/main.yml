@@ -11,17 +11,17 @@ pacman_config:
 
 # list of available color schemes: https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/vscode
 iterm2_color_schemes_clone_path: "{{ playbook_dir }}/repos/iterm2-color-schemes"
-iterm2_color_scheme_name: 3024 Night
+iterm2_color_scheme_name: Dracula+
 
 ddterm_config:
   - key: shortcut-move-tab-next
-    value: ["<Primary><Shift>k"]
-  - key: shortcut-move-tab-prev
     value: ["<Primary><Shift>j"]
+  - key: shortcut-move-tab-prev
+    value: ["<Primary><Shift>k"]
   - key: shortcut-next-tab
-    value: ["<Primary>k"]
-  - key: shortcut-prev-tab
     value: ["<Primary>j"]
+  - key: shortcut-prev-tab
+    value: ["<Primary>k"]
   - key: shortcut-page-close
     value: ["<Primary>w"]
   - key: shortcut-win-new-tab
