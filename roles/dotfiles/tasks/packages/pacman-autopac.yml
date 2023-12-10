@@ -4,7 +4,7 @@
   become: yes
   community.general.pacman:
     name: pacman-contrib
-    state: latest
+    state: present
 
 - name: install autopac systemd service and timer
   become: yes

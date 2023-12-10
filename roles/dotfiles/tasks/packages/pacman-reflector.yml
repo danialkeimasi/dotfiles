@@ -9,7 +9,7 @@
   become: yes
   community.general.pacman:
     name: reflector
-    state: latest
+    state: present
 
 # - name: start reflector service (don't enable it)
 #   become: yes

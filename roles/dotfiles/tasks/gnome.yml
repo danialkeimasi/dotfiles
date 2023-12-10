@@ -3,14 +3,14 @@
   become: yes
   ansible.builtin.package:
     name: xorg-xeyes
-    state: latest
+    state: present
 
 - name: install required packages for gnome extentions
   become: yes
   ansible.builtin.package:
     name:
       - clutter-gtk
-    state: latest
+    state: present
 
 - name: install gnome extensions
   ansible.builtin.command:
@@ -104,5 +104,4 @@
       - wireplumber
       - xdg-desktop-portal
       - xdg-desktop-portal-gnome
-      - clutter-gtk
-    state: latest
+    state: present

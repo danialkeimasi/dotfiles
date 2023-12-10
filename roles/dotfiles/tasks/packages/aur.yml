@@ -2,7 +2,7 @@
   become: yes
   ansible.builtin.package:
     name: base-devel
-    state: latest
+    state: present
 
 - name: create the `aur_builder` user
   become: yes

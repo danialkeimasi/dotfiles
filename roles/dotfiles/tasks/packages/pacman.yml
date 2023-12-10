@@ -36,7 +36,7 @@
   become: yes
   ansible.builtin.package:
     name: fuse2
-    state: latest
+    state: present
 
 - name: install desktop apps from pacman
   become: yes
@@ -62,4 +62,4 @@
   ansible.builtin.package:
     name:
       - android-tools
-    state: latest
+    state: present

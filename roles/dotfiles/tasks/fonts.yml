@@ -9,14 +9,14 @@
       - ttf-cascadia-code-nerd
       - ttf-cascadia-mono-nerd
       - ttf-sourcecodepro-nerd
-    state: latest
+    state: present
 
 - name: install ttf-twemoji (emoji font)
   become: yes
   become_user: aur_builder
   kewlfft.aur.aur:
     name: ttf-twemoji
-    state: latest
+    state: present
 
 - name: create user fonts directory
   ansible.builtin.file:

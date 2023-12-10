@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name:
       - autossh
-    state: latest
+    state: present
 
 - name: install ssh-publish systemd service
   become: yes

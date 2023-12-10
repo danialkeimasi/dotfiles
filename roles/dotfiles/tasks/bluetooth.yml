@@ -3,7 +3,7 @@
   become: yes
   ansible.builtin.package:
     name: bluez
-    state: latest
+    state: present
 
 - name: enable and start bluetooth service
   become: yes

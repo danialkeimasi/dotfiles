@@ -9,8 +9,7 @@
   ansible.builtin.package:
     name:
       - vte3
-    update_cache: yes
-    state: latest
+    state: present
 
 - name: install ddterm
   ansible.builtin.command:

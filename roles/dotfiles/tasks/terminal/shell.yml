@@ -2,7 +2,7 @@
   become: yes
   ansible.builtin.package:
     name: zsh
-    state: latest
+    state: present
 
 - name: get zsh binary path
   ansible.builtin.shell: which zsh
@@ -61,7 +61,7 @@
   become: yes
   ansible.builtin.package:
     name: lsd
-    state: latest
+    state: present
 
 - name: create lsd config directory
   ansible.builtin.file:
@@ -78,10 +78,10 @@
   become: yes
   ansible.builtin.package:
     name: bat
-    state: latest
+    state: present
 
 - name: install atuin
   become: yes
   ansible.builtin.package:
     name: atuin
-    state: latest
+    state: present
