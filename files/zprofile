@@ -26,13 +26,8 @@ export QUERA_ROOT="$HOME/Repositories/quera/quera"
 fpath+="$QUERA_ROOT/.quera/completion"
 autoload -Uz compinit && compinit
 
-q() {
-    if [[ "$PWD" == "$QUERA_ROOT" ]]; then
-        ./q $@
-    else
-        cd $QUERA_ROOT
-    fi
-}
+alias q="$QUERA_ROOT/q"
+alias qq="cd $QUERA_ROOT"
 alias qf="cd $QUERA_ROOT/front/next"
 alias qfn="cd $QUERA_ROOT/front/navbar"
 alias qr="cd $QUERA_ROOT/react"
