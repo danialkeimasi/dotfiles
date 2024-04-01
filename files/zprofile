@@ -44,3 +44,8 @@ if [ -d "$HOME/.pyenv" ]; then
         eval "$(pyenv virtualenv-init -)"
     fi
 fi
+
+# ------------------------
+# ruby gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
