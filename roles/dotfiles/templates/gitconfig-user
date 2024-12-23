@@ -3,3 +3,4 @@
 [user]
     email = {{ lookup('env', 'MY_EMAIL_ADDRESS') }}
     name = Danial Keimasi
+	signingkey = {{ lookup('env', 'SIGNING_SSH_KEY') }}

@@ -15,3 +15,7 @@
     defaultBranch = main
 [diff]
 	algorithm = histogram
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
